@@ -1,6 +1,5 @@
-import logging
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
-from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
+from telegram import Update
+from telegram.ext import Application, CommandHandler, ContextTypes
 import web_s
 
 token_ = """7093526457:AAG0YLzuocohWi0Zww7gRB6pI8xl98qgdMA"""
