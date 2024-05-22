@@ -5,12 +5,12 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 
-options = webdriver.FirefoxOptions()
-options.add_argument('--headless')
-options.add_argument('--disable-gpu')
-driver = webdriver.Firefox(options=options)
-
-driver.get("""https://animesp.xyz/""")
+#options = webdriver.FirefoxOptions()
+#options.add_argument('--headless')
+#options.add_argument('--disable-gpu')
+#driver = webdriver.Firefox(options=options)
+driver = webdriver.Firefox()
+driver.get("https://animesp.xyz/")
 search = driver.find_element(By.XPATH, "//*[@id='header__form']")
 
 
@@ -24,13 +24,14 @@ def search_(text: object) -> object:
     textBox = driver.find_element(By.TAG_NAME, 'input')
     textBox.send_keys(text)
     textBox.send_keys(Keys.ENTER)
-    url = f"https://animesp.xyz/animes/search?title={text}".replace(" ", '+')
+    url_anime = f"https://animesp.xyz/animes/search?title={text}".replace(" ", '+')
     return url_anime
 
-def cards(url):
+
+def cards(url_cards):
     here_card = {'href': [], 'name': [], 'image': []}
-    driver.get(url)
-    card_title = driver.find_elements(By.CLASS_NAME,"card__title")
+    driver.get(url_cards)
+    card_title = driver.find_elements(By.CLASS_NAME, "card__title")
     for card_anime in card_title:
         anime_title = card_anime.find_element(By.TAG_NAME, "a")
         here_card['href'].append(anime_title.get_attribute("href"))
@@ -41,9 +42,20 @@ def cards(url):
         here_card["image"].append(imag.get_attribute("src"))
     return here_card
 
+
+def download(url_don):
+    driver.get(url_don)
+    link = driver.find_element(By.ID, 'download-links')
+    mov_link = link.find_element(By.XPATH,
+                                 "/html/body/section[1]/div[2]/div/div[1]/div[2]/div[2]/div[1]/a[2]")
+    mov_link.click()
+    #if new_url == "https://animesp.xyz/login":
+        
+name_anime = input("enter anime:  ")
+test = search_(name_anime)
+test2 = cards(test)
+print(test2)
+i = int(input("enter ur number of list:"))
+download(test2['href'][i-1])
+
 print("running")
-
-
-
-
-
