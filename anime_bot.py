@@ -1,6 +1,6 @@
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes
-import web_s
+import Anime_scrap
 
 token_ = """7093526457:AAG0YLzuocohWi0Zww7gRB6pI8xl98qgdMA"""
 
