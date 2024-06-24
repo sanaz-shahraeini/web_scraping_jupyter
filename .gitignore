@@ -1,2 +1,4 @@
-.selnium
+.selnium/
+.idea/
+__pycache__/
 .env

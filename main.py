@@ -1,44 +1,42 @@
-import time
 from Anime_scrap_web import *
 import anime_gsheet as ag
 
 # First, you must register on the site. Site address: https://animesp.xyz/login
-#
-while True:
-    Question = input("Do you have account?(yes/no): ").lower()
-    if Question == "yes":
-        break
-    elif Question == "no":
-        print("___________log up_____________")
-        user_lis = [str(input("enter your name:  ")), str(input("enter a password: ")),
-                    str(input("enter a username:  "))]
-        ag.guser(user_lis)
-        time.sleep(4)
-        break
-    else:
-        continue
-i = 1
-while True:
-    print("___________log in_________")
-    # Enter username to test from:  zamir
-    username = input("Enter your Username:  ")
-    # Enter password to test from:  z@mir2000
-    password = input("Enter your password:  ")
-    check = ag.gcheck(username, password)
-    if check is True:
-        login("zamir", "z@mir2000")
-        break
-    else:
-        print("The username or password is incorrect. Please try again")
-        i += 1
-        if i == 4:
-            print("___________log up_____________")
-            user_lis = [str(input("enter your name:  ")), str(input("enter a password: ")),
-                        str(input("enter a username:  "))]
-            ag.guser(user_lis)
-            time.sleep(4)
-            continue
+# while True:
+#     Question = input("Do you have account?(yes/no): ").lower()
+#     if Question == "yes":
+#         break
+#     elif Question == "no":
+#         print("___________log up_____________")
+#         user_lis = [str(input("enter your name:  ")), str(input("enter a password: ")),
+#                     str(input("enter a username:  "))]
+#         ag.guser(user_lis)
+#         time.sleep(4)
+#         break
+#     else:
+#         continue
+# i = 1
+# while True:
+#     print("___________log in_________")
+#     # Enter username to test from:  zamir
+#     username = input("Enter your Username:  ")
+#     # Enter password to test from:  z@mir2000
+#     password = input("Enter your password:  ")
+#     check = ag.gcheck(username, password)
+#     if check is True:
+#        break
+#   else:
+#       print("The username or password is incorrect. Please try again")
+#       i += 1
+#       if i == 4:
+#           print("___________log up_____________")
+#           user_lis = [str(input("enter your name:  ")), str(input("enter a password: ")),
+#                       str(input("enter a username:  "))]
+#           ag.guser(user_lis)
+#           time.sleep(4)
+#           continue
 
+login("zamir", "z@mir2000")
 while True:
     time.sleep(4)
     # Enter the name of the desired anime
