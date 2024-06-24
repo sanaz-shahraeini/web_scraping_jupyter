@@ -11,9 +11,11 @@ def guser(user_list):
     wks = sh.worksheet("account")
     wks.append_rows([user_list])
 def gcheck(user, password):
+    str(password)
     wks = sh.worksheet("account")
-    fd = pandas.DataFrame(wks.get_all_records(), dtype=object)
-    if password in fd['password'].values and user in fd['username'].values:
+    df = pandas.DataFrame(wks.get_all_records(), dtype=object)
+    df['password'] = df['password'].astype(str)
+    if password in df['password'].values and user in df['username'].values:
         return True
     else:
         return False
