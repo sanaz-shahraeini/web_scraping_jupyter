@@ -35,53 +35,53 @@ import anime_gsheet as ag
 #           ag.guser(user_lis)
 #           time.sleep(4)
 #           continue
-
-login("zamir", "z@mir2000")
-while True:
-    time.sleep(4)
-    # Enter the name of the desired anime
-    # Note: You must enter the space between letters with only one space
-    print("___________search_________")
-    name_anime = input("Enter Anime name(if To exit, write the 'exit'):  ").lower()
-    if name_anime == "exit":
-        break
-    else:
-        result_page = search_(name_anime)
-        dic_result = cards(result_page)
-        number_result = len(dic_result["name"])
-        if number_result == 0:
-            print("The desired anime was not found. Please be careful in writing the name")
-            continue
-        print()
-        print(f"The following anime list was found for you.\n"
-              f"Submit the anime code to get the download link")
-
-        for i in range(number_result):
-            result = dic_result["name"][i]
-            print(f"code{i+1}: {result}")
-
-    # Send the code number of the anime you want
-    while True:
-        try:
-            code_anime = int(input("Enter code Anime (just enter number): "))
-            if code_anime == 0:
-                print("Choose from a range of code")
-                continue
-            else:
-                code_anime -= 1
-                url_anime = dic_result["href"][code_anime]
-                break
-        except IndexError:
-            print("Choose from a range of code")
-            continue
-        except ValueError:
-            print("choose just number")
-            continue
-    list_link = download(url_anime)
-    anime_data = []
-    for j in list_link:
-        anime_data.append(j)
-    ag.glinks(anime_data)
-    print("______send links_______")
-    print(anime_data)
-    continue
+#
+# login("zamir", "z@mir2000")
+# while True:
+#     time.sleep(4)
+#     # Enter the name of the desired anime
+#     # Note: You must enter the space between letters with only one space
+#     print("___________search_________")
+#     name_anime = input("Enter Anime name(if To exit, write the 'exit'):  ").lower()
+#     if name_anime == "exit":
+#         break
+#     else:
+#         result_page = search_(name_anime)
+#         dic_result = cards(result_page)
+#         number_result = len(dic_result["name"])
+#         if number_result == 0:
+#             print("The desired anime was not found. Please be careful in writing the name")
+#             continue
+#         print()
+#         print(f"The following anime list was found for you.\n"
+#               f"Submit the anime code to get the download link")
+#
+#         for i in range(number_result):
+#             result = dic_result["name"][i]
+#             print(f"code{i+1}: {result}")
+#
+#     # Send the code number of the anime you want
+#     while True:
+#         try:
+#             code_anime = int(input("Enter code Anime (just enter number): "))
+#             if code_anime == 0:
+#                 print("Choose from a range of code")
+#                 continue
+#             else:
+#                 code_anime -= 1
+#                 url_anime = dic_result["href"][code_anime]
+#                 break
+#         except IndexError:
+#             print("Choose from a range of code")
+#             continue
+#         except ValueError:
+#             print("choose just number")
+#             continue
+#     list_link = download(url_anime)
+#     anime_data = []
+#     for j in list_link:
+#         anime_data.append(j)
+#     ag.glinks(anime_data)
+#     print("______send links_______")
+#     print(anime_data)
+#     continue
