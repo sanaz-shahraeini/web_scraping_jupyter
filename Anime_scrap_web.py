@@ -3,16 +3,22 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
+import time
+
+start = time.time()
 
 # If you don't want to use the graphic environment, use the following codes:
 options = webdriver.FirefoxOptions()
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')
 driver = webdriver.Firefox(options=options)
-
-url = "https://animesp.xyz/login"
+driver2 = webdriver.Firefox(options=options)
 # driver = webdriver.Firefox()
+# driver2 = webdriver.Firefox()
+url = "https://animesp.xyz/login"
+url2 = "https://www.zoomg.ir/anime/"
 driver.get(url)
+driver2.get(url2)
 
 
 def login(user, u_pass):
@@ -32,10 +38,7 @@ def login(user, u_pass):
 def search_(text):
     # Search function on the site
     # Subject type input where each word must be written with a space
-    driver.get("https://animesp.xyz/login")
-    aw.login(user="zamir2", u_pass="z@mir2000")
-    sleep(4)
-    search = driver.find_element(By.CLASS_NAME, "header__form")
+    search = driver.find_element(By.ID, "header__form")
     text_box = search.find_element(By.CLASS_NAME, 'header__form-input')
     text_box.click()
     text_box.send_keys(text)
@@ -69,9 +72,7 @@ def download(url_don):
     return link
 
 
-def best_anime():
-    driver.get("https://animesp.xyz/login")
-    aw.login(user="zamir2", u_pass="z@mir2000")
+def new_anime():
     sleep(4)
     global best, img, title, active
     driver.find_element(By.CLASS_NAME, "header__nav-link").click()
@@ -96,9 +97,8 @@ def best_anime():
 def news():
     anews = {"caption": [], "link": []}
     sleep(4)
-    driver.get("https://www.zoomg.ir/anime/")
-    rows_news = driver.find_elements(By.CLASS_NAME,
-                                     "boxWrapper,latestArticles")
+    rows_news = driver2.find_elements(By.CLASS_NAME,
+                                      "boxWrapper,latestArticles")
     for images in rows_news:
         srcs = images.find_element(By.CLASS_NAME, "imgContainer")
         tag_caption = srcs.find_element(By.CLASS_NAME,
@@ -107,4 +107,5 @@ def news():
         link_news = link_news.find_element(By.TAG_NAME, "a")
         anews["link"].append(link_news.get_attribute("href"))
         anews["caption"].append(link_news.get_attribute("text"))
+    driver2.close()
     return anews
