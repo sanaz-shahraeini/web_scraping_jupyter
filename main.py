@@ -7,30 +7,29 @@ from random import choice
 import button as btn
 from time import sleep
 
+# Security variables whose value is in another file
 TOKEN = config('token')
 User = config('User')
 password = config('Password')
-# login website
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
-aw.login(user=User, u_pass=password)  # login in website
-Counter = 0
+
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+
+Counter = 0     # value in Button
 Counter2 = 0     # value in news_command and button
 dic_result = "for dict"  # dictionary in send_anime and
-news_dict = aw.news()
+
 
 # command handler
-async def start_command(update: Update, context: CallbackContext):
+async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    global news_dict
     await update.message.reply_text(
         f"""سلام {update.message.from_user.first_name} خوش آمدی.
 برای راهنمایی استفاده از ربات می توانی از help/ کمک بگیری             
              """, reply_markup=btn.keyboard_start())
-
+    news_dict = aw.news()  # get news of web
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(text=btn.help_text,
-                                    reply_markup=btn.keyboard_start())
-
+    await update.message.reply_text(text=btn.help_text, reply_markup=btn.keyboard_start())
 
 async def news_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     global news_dict, Counter2
@@ -41,14 +40,12 @@ async def news_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await context.bot.send_message(chat_id=update.message.from_user.id,
                                    text=news_dict["caption"][Counter2],
                                    reply_markup=reply_news)
-    news_dict = aw.news()
-
 
 # command handler
 
 async def send_anime(update: Update, context: ContextTypes.DEFAULT_TYPE):
     global dic_result
-    text: str = update.message.text.replace("/name", "")
+    text: str = update.message.text
     dic_result = aw.cards(aw.search_(text))
     dict_text = open("text_result", "w")
     # Write found links page in a file
@@ -94,16 +91,13 @@ async def code_anime(update, code_, context):
     url_img = dic_result["image"][number_anime]
     await context.bot.send_photo(chat_id=query.from_user.id,
                                  photo=url_img,
-                                 reply_markup=btn.keyboard_suggested(url_sub=anime_data[1],
-                                                                     url_dow=anime_data[0]))
-
+                                 reply_markup=btn.keyboard_dow(url_sub=anime_data[1], url_dow=anime_data[0]))
 
 """
 Bot button functionality and responding to them
 Most of the buttons are written in the file button.py
 Some buttons are inside this file
 """
-
 
 async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
@@ -120,7 +114,8 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
                                      photo=btn.suggested_dict["img"][Counter],
                                      caption=btn.suggested_dict["cap"][Counter],
                                      reply_markup=btn.keyboard_suggested(url_sub=btn.suggested_dict["url_zer"][Counter],
-                                                                         url_dow=btn.suggested_dict["url_don"][Counter]))
+                                                                         url_dow=btn.suggested_dict["url_don"][Counter])
+                                     )
 
     elif query.data == "wallpaper":
         fil = open("image_url.txt", "r")
@@ -170,10 +165,14 @@ async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await query.answer()
         await code_anime(update, code_button, context)
 
-
-# run bot
+"""
+Starting Bot and Communicating with Telegram API
+login in Anime sp with user and password
+and handler codes 
+"""
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TOKEN).build()
+    aw.login(user=User, u_pass=password)  # login in website
     application.add_handler(CommandHandler("start", start_command))
     application.add_handler(CommandHandler("help", help_command))
     application.add_handler(CommandHandler("news", news_command))

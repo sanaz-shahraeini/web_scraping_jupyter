@@ -79,6 +79,16 @@ def keyboard_new(url_sub, url_dow):
 
     new = InlineKeyboardMarkup(keyboard)
     return new
+
+# _______keyboard download anime______
+def keyboard_dow(url_sub, url_dow):
+    keyboard = [
+        [InlineKeyboardButton(text="زیر نویس", url=url_sub),
+         InlineKeyboardButton(text="لینک دانلود", url=url_dow)]]
+
+    download = InlineKeyboardMarkup(keyboard)
+    return download
+
 # ____text help_________
 help_text="""
 ربات انیمه بات برای دسترسی راحت تر شما به انیمه های هستش\n\n
